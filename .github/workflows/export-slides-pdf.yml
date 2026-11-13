@@ -53,6 +53,7 @@ jobs:
                         .reveal{opacity:1!important;filter:none!important;transform:none!important}
                         .leaving{display:none!important;visibility:hidden!important}
                         #geometry-study{opacity:.65!important}
+                        .toolbar,.chrome,.refslink,.notes,.overview{display:none!important}
                       """)
                       data = await page.evaluate("""(targetIndex) => {
                         const slides=Array.from(document.querySelectorAll('.slide'));
