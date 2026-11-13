@@ -45,6 +45,44 @@ h2 em{color:#966b50;font-style:italic}.intro{font:400 clamp(25px,2.7vw,42px)/1.1
 .metric > span{display:block;font:600 clamp(11px,1vw,13px)/1.5 "DM Sans",Arial,sans-serif;text-transform:uppercase;letter-spacing:.12em;color:#6a5145;margin:0 0 12px;max-width:36ch}
 .metric > small{display:block;color:#77655c;font-size:13px;line-height:1.55;max-width:42ch;margin:0}
 @media(max-width:760px){.metric-row{grid-template-columns:1fr;gap:16px}.metric{min-height:0;padding:28px 24px}.metric strong{font-size:clamp(56px,13vw,88px)}}
+
+/* Accessibility refinement: safeguard cards on the dark Liberty section */
+.dark .numbered .point {
+  background:#fff7e9;
+  border-top:3px solid #b18a58;
+  padding:clamp(24px,2.7vw,34px);
+  color:#33242a;
+  min-width:0;
+  box-shadow:0 6px 22px rgba(0,0,0,.12);
+}
+.dark .numbered .point .n {
+  color:#815536;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.15em;
+  line-height:1.5;
+}
+.dark .numbered .point h3 {
+  color:#39252a;
+  font:600 clamp(29px,2.65vw,39px)/1.06 "Cormorant Garamond",Georgia,serif;
+  margin:12px 0 16px;
+  letter-spacing:-.015em;
+}
+.dark .numbered .point p {
+  color:#4a3936;
+  font-size:clamp(15px,1.15vw,17px);
+  line-height:1.65;
+  margin:0;
+}
+.dark .numbered {
+  gap:22px;
+  align-items:stretch;
+}
+@media(max-width:760px){
+  .dark .numbered {grid-template-columns:1fr;gap:15px}
+  .dark .numbered .point {padding:25px}
+  .dark .numbered .point h3 {font-size:34px}
+}
 </style></head>
 <body><div id="progress" aria-hidden="true"></div>
 <header class="topbar"><a class="logo" href="../">THE PRICE OF DEMOCRACY</a><nav class="toplinks" aria-label="Quick links"><a href="../">Slide deck</a><a href="#contents">Explore</a><a href="#references">Sources</a></nav></header>
