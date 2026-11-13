@@ -147,145 +147,154 @@ button:focus-visible,a:focus-visible{outline:2px solid #ead0a0;outline-offset:4p
  .slide[data-title="What I Learned"] .reflect .card {padding:16px 21px}
  .slide[data-title="What I Learned"] .subtitle {margin-top:10px}
 }
-
-/* Visual-storytelling redesign — retain original Florence paintings and Renaissance palette */
-.story-pair{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(20px,3vw,40px);align-items:stretch;margin-top:24px;text-align:left}
-.story-emphasis{display:flex;flex-direction:column;justify-content:center;min-height:295px;text-align:center;padding:30px}
-.story-symbol{font:normal clamp(76px,11vw,154px)/1 Georgia,serif;color:var(--gold2);margin:8px auto 14px}
-.story-symbol.small{font-size:clamp(60px,8vw,115px)}
-.story-quote{font:normal clamp(30px,4.1vw,59px)/1.1 Georgia,serif;color:var(--ivory);margin:12px 0}
-.story-quote em{color:#e9c999}
-.story-takeaway{font:15px/1.6 Arial,sans-serif;color:#ead5b7;margin:16px 0 0}
-.story-feature{font:normal clamp(28px,3.6vw,46px)/1.16 Georgia,serif;color:var(--ivory);margin:16px 0}
-.story-sub{font:16px/1.6 Arial,sans-serif;color:#e2ccb1}
-.story-pill{display:inline-block;border:1px solid rgba(210,175,122,.4);padding:9px 12px;color:#e9c999;font:700 11px/1 Arial,sans-serif;letter-spacing:.13em;text-transform:uppercase}
-.story-debate{display:grid;grid-template-columns:1fr auto 1fr;gap:22px;margin-top:26px;text-align:center;align-items:stretch}
-.story-debate .card{min-height:300px;display:flex;flex-direction:column;justify-content:center;align-items:center}
-.story-vs{align-self:center;color:#e9c999;font:italic 43px Georgia,serif}
-.story-contrast{font:normal clamp(29px,3.5vw,48px)/1.1 Georgia,serif;margin:15px 0}
-.story-scale{width:240px;height:130px;max-width:100%;display:block;margin:12px auto}
-.story-scale line,.story-scale path{stroke:#e9c999;stroke-width:3;fill:none;stroke-linecap:round}
-.story-stats{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}
-.story-stat{background:rgba(35,13,17,.6);border:1px solid rgba(210,175,122,.22);padding:18px;text-align:center}
-.story-stat strong{font:normal clamp(48px,6vw,85px)/1 Georgia,serif;color:#e9c999;display:block}
-.story-stat span{font:14px/1.4 Arial,sans-serif;color:#e2ccb1;display:block}
-.story-bottom{margin:17px auto 0;max-width:900px;text-align:center;font:clamp(16px,1.55vw,21px)/1.42 Georgia,serif;color:#ead5b7}
-@media(max-width:850px){.story-pair,.story-debate{grid-template-columns:1fr}.story-vs{display:none}.story-emphasis,.story-debate .card{min-height:auto}.story-quote{font-size:clamp(28px,6vw,42px)}.story-symbol{font-size:64px}.story-stats{margin-top:10px}}
-
 </style>
 </head>
 <body>
 <main id="app">
   <!-- Slide 1 -->
-  <section class="slide active" data-title="Research Question" data-notes="Florence's Medici family provides a historical lens for concentrated political influence, not an example of compulsory voting. Open with the Botticelli painting, then ask who holds political power when only the most motivated citizens participate. My essay investigates whether compulsory voting broadens representation.">
-    <div class="bg florence painting-pan"></div><div class="corner-motifs"></div><div class="shell"><div class="stage medici-stage">
-      <div class="eyebrow reveal">Research Question · Florence, 1494</div>
-      <div class="medici-layout">
-        <div class="medici-copy">
-          <h1 class="medici-title reveal" style="--delay:140ms">The Price of <span class="italic">Democracy</span></h1>
-          <div class="ornament reveal" style="--delay:250ms"></div>
-          <p class="medici-question reveal" style="--delay:350ms">Who really holds power when only some citizens vote?</p>
-          <div class="keyline reveal" style="--delay:450ms"></div>
-          <p class="medici-context reveal" style="--delay:520ms"><strong>My question:</strong> Could compulsory voting make democracy more representative?</p>
-          <p class="footer-note reveal" style="--delay:640ms">From concentrated influence to broader participation</p>
+  <section class="slide active" data-title="Research Question" data-notes="Begin with the Medici family's political dominance in Florence and their fall from power in 1494. The artwork is Botticelli’s authentic 15th-century Adoration of the Magi, which includes figures traditionally identified as Cosimo, Piero, Giovanni, Lorenzo, and Giuliano de’ Medici; it is a religious scene incorporating their portraits, not a posed family group portrait. Then introduce the research question: should voting be compulsory to broaden representation? Florence is a historical analogy about concentrated power, not an example of compulsory voting.">
+    <div class="bg florence painting-pan"></div>
+    <div class="corner-motifs"></div>
+    <div class="shell">
+      <div class="stage medici-stage">
+        <div class="eyebrow reveal">Research Question · Florence, 1494</div>
+        <div class="ornament reveal" style="--delay:150ms"></div>
+        <div class="medici-layout">
+          <div class="medici-copy">
+            <h1 class="medici-title reveal" style="--delay:260ms">The Price of <span class="italic">Democracy</span></h1>
+            <p class="medici-question reveal" style="--delay:470ms">Should voting be compulsory to ensure that democracy represents the broader public rather than disproportionately reflecting highly motivated minorities?</p>
+            <div class="keyline reveal" style="--delay:630ms"></div>
+            <p class="medici-context reveal" style="--delay:750ms">The Medici family's influence over Florence raises a question that remains relevant: <em>who actually exercises political power?</em></p>
+            <p class="footer-note reveal" style="--delay:880ms">From narrow government to broader participation · <span class="muted">governo stretto / governo largo</span></p>
+          </div>
+          <figure class="medici-figure reveal" style="--delay:420ms">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Botticelli_Adorazione_dei_magi.jpg" alt="Sandro Botticelli’s Adoration of the Magi, circa 1470–1475, containing traditional portraits of several Medici family members" />
+            <figcaption>THE MEDICI FAMILY IN RENAISSANCE ART <span>Sandro Botticelli, <i>Adoration of the Magi</i>, c. 1470–1475 · Uffizi Galleries. Several figures are traditionally identified as Medici family members.</span></figcaption>
+          </figure>
         </div>
-        <figure class="medici-figure reveal" style="--delay:320ms">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Botticelli_Adorazione_dei_magi.jpg" alt="Botticelli's Adoration of the Magi, with figures traditionally identified as members of the Medici family" />
-          <figcaption>THE MEDICI FAMILY IN RENAISSANCE ART <span>Sandro Botticelli, <i>Adoration of the Magi</i>, c. 1470–1475 · Uffizi Galleries.</span></figcaption>
-        </figure>
       </div>
-    </div></div><div class="folio">I · V</div>
+    </div>
+    <div class="folio">I · V</div>
   </section>
 
   <!-- Slide 2 -->
-  <section class="slide" data-title="Civic Duty" data-notes="Introduce John Stuart Mill's Considerations on Representative Government. Mill's argument is that voting is a public duty rather than merely a private preference. The quote is from chapter 10. Explain how this became the philosophical foundation for my position on compulsory voting.">
-    <div class="bg florence2 painting-pan"></div><div class="corner-motifs"></div><div class="shell"><div class="stage">
-      <div class="eyebrow reveal">First Source · John Stuart Mill</div>
-      <h2 class="title2 reveal" style="--delay:140ms">Voting is a <span class="italic">civic duty.</span></h2>
-      <div class="ornament reveal" style="--delay:240ms"></div>
-      <div class="story-pair reveal" style="--delay:320ms">
-        <div class="card story-emphasis">
-          <div class="story-pill">Representative Government</div>
-          <div class="story-symbol" aria-hidden="true">⚜</div>
-          <p class="story-takeaway">A ballot affects more than the person who casts it.</p>
-        </div>
-        <div class="card story-emphasis">
-          <span class="story-pill">Mill · Chapter 10</span>
-          <p class="story-quote">“It is strictly a matter of <em>duty.</em>”</p>
-          <p class="story-takeaway">My ethical foundation: democratic rights come with public responsibilities.</p>
+  <section class="slide" data-title="First Source" data-notes="Introduce John Stuart Mill's Considerations on Representative Government as your main philosophical source. The central idea is that voting is not merely a private preference; it is a public duty with consequences for the community. Mention that this source gave your argument its ethical foundation.">
+    <div class="bg florence2 painting-pan"></div>
+    <div class="corner-motifs"></div>
+    <div class="shell">
+      <div class="stage">
+        <div class="eyebrow reveal">First Source</div>
+        <h2 class="title2 reveal" style="--delay:140ms">John Stuart Mill, <span class="italic">Considerations on Representative Government</span></h2>
+        <div class="ornament reveal" style="--delay:250ms"></div>
+        <div class="grid-2 reveal" style="--delay:360ms">
+          <div class="card">
+            <div class="badge">Main Point</div>
+            <h3>Voting is a civic duty.</h3>
+            <p>Mill argues that casting a ballot should not be treated merely as an act of personal preference. Because political decisions affect the whole community, voting carries a moral responsibility to consider the public good.</p>
+            <div class="quote">It is strictly a matter of duty.</div>
+            <div class="attribution">Mill · Chapter 10</div>
+          </div>
+          <div class="card">
+            <div class="badge">Why it matters</div>
+            <h3>How this source shaped my essay</h3>
+            <p>This source gave my essay its philosophical foundation. It helped me argue that compulsory voting can be defended not just as a policy tool, but as a way of reinforcing democratic responsibility.</p>
+            <p class="small">Key idea: rights in a democracy are tied to obligations.</p>
+          </div>
         </div>
       </div>
-    </div></div><div class="folio">II · V</div>
+    </div>
+    <div class="folio">II · V</div>
   </section>
 
   <!-- Slide 3 -->
-  <section class="slide" data-title="Why People Abstain" data-notes="Feddersen's 2004 article examines rational-choice explanations of turnout. One ballot rarely changes an election outcome, and voting takes time and effort. Abstention can make sense individually, but collectively low turnout can distort representation. The visual scale is an analogy, not Feddersen's own figure.">
-    <div class="bg panel"></div><div class="corner-motifs"></div><div class="shell"><div class="stage">
-      <div class="eyebrow reveal">Additional Source · Timothy J. Feddersen</div>
-      <h2 class="title2 reveal" style="--delay:140ms">Why <span class="italic">not</span> vote?</h2><div class="ornament reveal" style="--delay:240ms"></div>
-      <div class="story-pair reveal" style="--delay:320ms">
-        <div class="card story-emphasis">
-          <span class="story-pill">The voting paradox</span>
-          <svg class="story-scale" viewBox="0 0 240 130" aria-hidden="true"><line x1="120" y1="23" x2="120" y2="109"/><line x1="40" y1="53" x2="200" y2="43"/><line x1="72" y1="51" x2="72" y2="83"/><line x1="170" y1="46" x2="170" y2="83"/><path d="M37 83Q72 119 107 83Z"/><path d="M135 83Q170 119 205 83Z"/><line x1="88" y1="110" x2="152" y2="110"/></svg>
-          <div class="story-stats">
-            <div class="story-stat"><span>Individual</span><strong style="font-size:36px">Cost</strong><span>Time &amp; effort</span></div>
-            <div class="story-stat"><span>Collective</span><strong style="font-size:36px">Need</strong><span>Representation</span></div>
+  <section class="slide" data-title="Economic Source" data-notes="This is a complementary economic source. Timothy Feddersen reviews the paradox of not voting: the probability that one person's ballot changes a large election is tiny, while voting consumes time and effort. The surprising result is that abstention may be individually rational even though widespread abstention can weaken representation. Do not claim the theory predicts that nobody ever votes; civic duty, expression, and social norms can also motivate turnout.">
+    <div class="bg panel"></div>
+    <div class="corner-motifs"></div>
+    <div class="shell">
+      <div class="stage">
+        <div class="eyebrow reveal">Additional Source · Economic Theory</div>
+        <h2 class="title2 reveal" style="--delay:140ms">The <span class="italic">Paradox</span> of Not Voting</h2>
+        <div class="ornament reveal" style="--delay:250ms"></div>
+        <div class="grid-2 reveal" style="--delay:350ms">
+          <div class="card">
+            <div class="badge">Timothy J. Feddersen · 2004</div>
+            <h3>Why vote if one vote rarely changes the outcome?</h3>
+            <p>Rational-choice theory compares the personal costs of voting with the very small probability of casting a decisive ballot.</p>
+            <div class="quote" style="font-size:clamp(21px,2.25vw,31px)">Individually rational abstention can become a collective problem.</div>
+            <p class="small">Conceptual summary, not a direct quotation.</p>
+          </div>
+          <div class="card">
+            <div class="badge">What It Adds</div>
+            <h3>The conflict between incentives and responsibility</h3>
+            <p>Mill describes why citizens <i>ought</i> to participate; Feddersen helps explain why some choose not to. Together, they reveal a tension between private incentives and democratic needs.</p>
+            <p class="small">Source: Feddersen, “Rational Choice Theory and the Paradox of Not Voting,” <i>Journal of Economic Perspectives</i>.</p>
           </div>
         </div>
-        <div class="card story-emphasis">
-          <p class="story-quote">Rational for one. <em>Costly for many.</em></p>
-          <p class="story-takeaway">Feddersen helped me see why participation cannot be taken for granted.</p>
-        </div>
       </div>
-    </div></div><div class="folio">III · V</div>
+    </div>
+    <div class="folio">III · V</div>
   </section>
 
   <!-- Slide 4 -->
-  <section class="slide" data-title="Freedom vs. Duty" data-notes="Mill's On Liberty creates a serious counterargument. Requiring citizens to vote can conflict with freedom of conscience and the freedom to abstain. My response distinguishes participation from endorsement: a carefully limited system could preserve secret ballots, blank ballots and reasonable exemptions, while still inviting debate about state coercion.">
-    <div class="bg panel"></div><div class="corner-motifs"></div><div class="shell"><div class="stage">
-      <div class="eyebrow reveal">Counterargument · John Stuart Mill, On Liberty</div>
-      <h2 class="title2 reveal" style="--delay:140ms">Freedom <span class="italic">vs.</span> Duty</h2>
-      <div class="ornament reveal" style="--delay:240ms"></div>
-      <div class="story-debate reveal" style="--delay:320ms">
-        <div class="card">
-          <span class="story-pill">The objection</span>
-          <div class="story-symbol small" aria-hidden="true">⚖</div>
-          <h3 class="story-contrast">Freedom to abstain</h3>
-          <p class="story-sub">Nonparticipation can itself express a political choice.</p>
-        </div>
-        <span class="story-vs">vs.</span>
-        <div class="card">
-          <span class="story-pill">My response</span>
-          <div class="story-symbol small" aria-hidden="true">✦</div>
-          <h3 class="story-contrast">Duty to participate</h3>
-          <p class="story-sub">Require attendance, not endorsement: allow blank ballots and exemptions.</p>
+  <section class="slide" data-title="Counterargument Source" data-notes="Use On Liberty as the counterargument source. Explain that Mill's principle of individual sovereignty introduces a serious objection to compulsory voting. This slide should demonstrate concession: democracy should not casually override autonomy. Then briefly note how the distinction between participation and endorsement shapes your response.">
+    <div class="bg panel"></div>
+    <div class="corner-motifs"></div>
+    <div class="shell">
+      <div class="stage">
+        <div class="eyebrow reveal">Counterargument Source</div>
+        <h2 class="title2 reveal" style="--delay:140ms">John Stuart Mill, <span class="italic">On Liberty</span></h2>
+        <div class="ornament reveal" style="--delay:250ms"></div>
+        <div class="grid-2 reveal" style="--delay:360ms">
+          <div class="card">
+            <div class="badge">Main Point</div>
+            <h3>Individual freedom matters.</h3>
+            <p>This source complicates my argument. Mill insists that people should retain authority over their own minds and actions, which raises the objection that voting should remain voluntary.</p>
+            <div class="quote">Over himself, over his own body and mind, the individual is sovereign.</div>
+            <div class="attribution">Mill · Chapter 1</div>
+          </div>
+          <div class="card">
+            <div class="badge">Why it matters</div>
+            <h3>How it challenged my position</h3>
+            <p>This source forced me to make a real concession. I had to acknowledge that compulsory voting may infringe on autonomy, especially for people who reject every candidate or feel politically uninformed.</p>
+            <p class="small">My response became more limited: participation could be required while still allowing blank ballots, privacy, and exemptions.</p>
+          </div>
         </div>
       </div>
-      <p class="story-bottom reveal" style="--delay:560ms">A stronger argument recognizes that <em>civic duty has limits.</em></p>
-    </div></div><div class="folio">IV · V</div>
+    </div>
+    <div class="folio">IV · V</div>
   </section>
 
   <!-- Slide 5 -->
-  <section class="slide" data-title="What I Learned" data-notes="The research made my starting hypothesis more nuanced. Feddersen explains individually rational abstention. Oprea suggests compulsory voting can shift political positioning toward the median voter under certain conditions. Fowler's research on Australia estimates about 24 percentage points higher turnout and effects on party outcomes. Mill reminds me to balance civic duty and liberty. The historical findings cannot guarantee the same effects elsewhere.">
-    <div class="bg florence painting-pan"></div><div class="corner-motifs"></div><div class="shell"><div class="stage">
-      <div class="eyebrow reveal">What I Learned</div>
-      <h2 class="title2 reveal" style="--delay:120ms">More turnout. <span class="italic">More nuance.</span></h2>
-      <div class="ornament reveal" style="--delay:230ms"></div>
-      <div class="story-pair reveal" style="--delay:330ms">
-        <div class="card story-emphasis">
-          <span class="story-pill">Before</span>
-          <p class="story-quote">More voters = <em>better democracy.</em></p>
+  <section class="slide" data-title="What I Learned" data-notes="I began by assuming more voters automatically meant a better democracy. Feddersen helped me understand why abstention can be rational. Oprea showed that higher participation may shift political representation toward the median voter under certain conditions. Fowler found that compulsory voting increased turnout in Australia by about 24 percentage points and altered electoral outcomes. Mill reminds us that civic responsibility must be balanced with freedom. My conclusion is more careful: broader participation matters, but it cannot guarantee better decisions.">
+    <div class="bg florence painting-pan"></div>
+    <div class="corner-motifs"></div>
+    <div class="shell">
+      <div class="stage">
+        <div class="eyebrow reveal">What I Learned</div>
+        <h2 class="title2 reveal" style="--delay:140ms">More participation. <span class="italic">More nuance.</span></h2>
+        <div class="ornament reveal" style="--delay:250ms"></div>
+        <div class="arrow-bridge reveal" style="--delay:340ms">Initial belief <span></span> refined view</div>
+        <div class="reflect reveal" style="--delay:420ms">
+          <div class="card">
+            <div class="badge">Before</div>
+            <h3>More voters = better democracy.</h3>
+            <p>Turnout alone seemed like the answer.</p>
+          </div>
+          <div class="card">
+            <div class="badge">After</div>
+            <h3>Turnout changes representation.</h3>
+            <ul class="bullets">
+              <li>Feddersen: abstention can be rational.</li>
+              <li>Oprea &amp; Fowler: participation can reshape elections.</li>
+              <li>Mill: civic duty must respect freedom.</li>
+            </ul>
+          </div>
         </div>
-        <div class="card story-emphasis">
-          <span class="story-pill">After · Fowler, 2013</span>
-          <p class="story-symbol" style="font-size:clamp(75px,10vw,135px);margin:8px 0 0">+24</p>
-          <p class="story-sub" style="text-align:center;margin:0">percentage points in Australian turnout</p>
-          <p class="story-takeaway">Participation changes elections — not necessarily their quality.</p>
-        </div>
+        <p class="subtitle reveal" style="--delay:760ms">Australia: +24 percentage points in turnout (Fowler, 2013). <em>No guaranteed outcome.</em></p>
       </div>
-      <p class="story-bottom reveal" style="--delay:600ms">Feddersen · Oprea · Fowler · Mill: <em>representation matters, but freedom still matters.</em></p>
       <button class="refslink" id="showSources">View sources &amp; credits</button>
-    </div></div><div class="folio">V · V</div>
+    </div>
+    <div class="folio">V · V</div>
   </section>
 
   <div id="geometry-study" aria-hidden="true" title="Rotating Renaissance-inspired geometric construction">
