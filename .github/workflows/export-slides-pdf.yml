@@ -1,4 +1,4 @@
-name: Export Renaissance Slides PDF
+name: Screenshot each slide and assemble verified PDF
 
 on:
   workflow_dispatch:
@@ -11,84 +11,111 @@ permissions:
   contents: write
 
 jobs:
-  render:
+  export:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install browser and PDF dependencies
+      - name: Install headless browser and imaging tools
         run: |
-          python -m pip install --upgrade pip
-          pip install playwright pillow
+          python -m pip install playwright pillow pypdf
           python -m playwright install --with-deps chromium
-      - name: Export five slides with historical painting
+      - name: Independently screenshot all five slides
         run: |
           python - <<'PY'
-          import asyncio
+          import asyncio, hashlib
           from pathlib import Path
-          from PIL import Image
-          import hashlib
+          from PIL import Image, ImageChops, ImageStat
+          from pypdf import PdfReader
           from playwright.async_api import async_playwright
 
-          async def main():
-              async with async_playwright() as p:
-                  browser = await p.chromium.launch(headless=True, args=['--disable-dev-shm-usage'])
-                  page = await browser.new_page(viewport={'width':1600,'height':900}, device_scale_factor=1)
-                  await page.goto(Path('index.html').resolve().as_uri(),wait_until='load',timeout=90000)
-                  await page.evaluate("document.fonts.ready")
-                  await page.add_style_tag(content='*,*::before,*::after{animation-duration:0s!important;animation-delay:0s!important;transition-duration:0s!important;}')
-                  await page.wait_for_timeout(900)
-                  image = page.locator('.medici-figure img')
-                  await image.evaluate("(img) => img.decode().catch(()=>{})")
-                  ok = await image.evaluate("(img) => img.complete && img.naturalWidth > 100")
-                  if not ok:
-                      raise RuntimeError('Historical Botticelli painting did not load; refusing to export a PDF with missing artwork.')
-                  images=[]
-                  fingerprints=[]
-                  titles=[]
-                  for i in range(5):
-                      # Select the target slide directly instead of relying on the
-                      # browser's 900ms keyboard-navigation lockout.
-                      title = await page.evaluate("""(slideIndex) => {
-                          const slides = [...document.querySelectorAll('.slide')];
-                          slides.forEach((slide, idx) => {
-                              slide.classList.remove('active', 'leaving');
-                              if (idx === slideIndex) slide.classList.add('active');
-                          });
-                          const active = document.querySelectorAll('.slide.active');
-                          if (active.length !== 1 || active[0] !== slides[slideIndex]) {
-                              throw new Error('Incorrect active slide');
-                          }
-                          document.getElementById('counter').textContent =
-                              String(slideIndex + 1).padStart(2,'0') + ' / 05';
-                          return active[0].dataset.title;
-                      }""", i)
-                      await page.wait_for_timeout(200)
-                      path = f'/tmp/renaissance-slide-{i+1}.png'
-                      await page.screenshot(path=path, full_page=False)
-                      data = Path(path).read_bytes()
-                      fingerprints.append(hashlib.sha256(data).hexdigest())
-                      titles.append(title)
-                      images.append(Image.open(path).convert('RGB'))
-                  if len(images) != 5 or len(set(fingerprints)) != 5:
-                      raise RuntimeError(f'Duplicate slide pages detected: {list(zip(titles, fingerprints))}')
-                  if len(set(titles)) != 5:
-                      raise RuntimeError(f'Duplicate slide titles detected: {titles}')
-                  print('Verified five distinct captured slides:', titles)
-                  images[0].save('The_Price_of_Democracy_Slides_Authentic_Medici.pdf',
-                                'PDF',resolution=150.0,save_all=True,append_images=images[1:])
+          out = Path('slide-screenshots')
+          out.mkdir(exist_ok=True)
+          async def export():
+              async with async_playwright() as playwright:
+                  browser = await playwright.chromium.launch(headless=True, args=['--disable-dev-shm-usage'])
+                  images, signatures, titles = [], [], []
+                  for index in range(5):
+                      # New page, isolated load and explicit slide selection per screenshot.
+                      page = await browser.new_page(viewport={'width':1600,'height':900},
+                                                    device_scale_factor=1)
+                      await page.goto(Path('index.html').resolve().as_uri() + '#slide-' + str(index+1),
+                                      wait_until='load',timeout=90000)
+                      await page.evaluate('document.fonts.ready')
+                      await page.add_style_tag(content="""
+                        *,*::before,*::after{
+                          animation:none!important;transition:none!important;
+                        }
+                        .slide:not(.active){display:none!important;visibility:hidden!important}
+                        .slide.active{display:block!important;visibility:visible!important;opacity:1!important}
+                        .reveal{opacity:1!important;filter:none!important;transform:none!important}
+                        .leaving{display:none!important;visibility:hidden!important}
+                        #geometry-study{opacity:.65!important}
+                      """)
+                      data = await page.evaluate("""(targetIndex) => {
+                        const slides=Array.from(document.querySelectorAll('.slide'));
+                        if (slides.length!==5) throw new Error('Expected exactly five slides');
+                        slides.forEach((slide,i) => {
+                          slide.classList.remove('active','leaving');
+                          if(i===targetIndex) slide.classList.add('active');
+                        });
+                        const visible=Array.from(document.querySelectorAll('.slide.active'));
+                        if(visible.length!==1||visible[0]!==slides[targetIndex])
+                          throw new Error('Wrong slide active');
+                        document.getElementById('counter').textContent=
+                          String(targetIndex+1).padStart(2,'0')+' / 05';
+                        document.getElementById('progress').style.width=((targetIndex+1)*20)+'%';
+                        return {title:visible[0].dataset.title,
+                                excerpt:visible[0].innerText.slice(0,120)};
+                      }""",index)
+                      if index==0:
+                          painting=page.locator('.medici-figure img')
+                          await painting.evaluate("(img) => img.decode().catch(()=>{})")
+                          ok=await painting.evaluate("(img)=>img.complete&&img.naturalWidth>200")
+                          if not ok:
+                              raise RuntimeError('Botticelli image failed to load; export stopped')
+                          src=await painting.get_attribute('src')
+                          if 'Botticelli' not in src and 'botticelli' not in src:
+                              raise RuntimeError('Wrong Medici artwork, export stopped')
+                      await page.wait_for_timeout(280)
+                      filename=out/f'slide-{index+1}.png'
+                      await page.screenshot(path=str(filename),full_page=False,animations='disabled')
+                      im=Image.open(filename).convert('RGB')
+                      if im.size!=(1600,900):raise RuntimeError('Incorrect screenshot dimensions')
+                      digest=hashlib.sha256(filename.read_bytes()).hexdigest()
+                      if digest in signatures:raise RuntimeError('Duplicate screenshot detected')
+                      images.append(im)
+                      signatures.append(digest)
+                      titles.append(data['title'])
+                      print(f"Screenshot {index+1}/5: {data['title']} — {data['excerpt'][:68]}")
+                      await page.close()
+                  if len(set(titles))!=5:
+                      raise RuntimeError(f'Duplicate slide titles: {titles}')
+                  # Verify substantive differences, not just different progress counters.
+                  for index in range(4):
+                      left=images[index].resize((200,112))
+                      right=images[index+1].resize((200,112))
+                      difference=ImageStat.Stat(ImageChops.difference(left,right)).mean
+                      score=sum(difference)/3
+                      print(f'Visual difference between slides {index+1} and {index+2}: {score:.2f}')
+                      if score<2:
+                          raise RuntimeError('Two adjacent screenshots appear visually identical')
+                  pdf='The_Price_of_Democracy_Slides_Authentic_Medici.pdf'
+                  images[0].save(pdf,'PDF',resolution=150,save_all=True,append_images=images[1:])
+                  if len(PdfReader(pdf).pages)!=5:
+                      raise RuntimeError('Final PDF must have exactly five pages')
+                  print('SUCCESS: five unique screenshots compiled as five PDF pages')
                   await browser.close()
-                  print('Verified historical painting and five unique landscape pages.')
-          asyncio.run(main())
+          asyncio.run(export())
           PY
-      - name: Publish PDF to repository
+      - name: Commit screenshots and corrected PDF
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add The_Price_of_Democracy_Slides_Authentic_Medici.pdf
+          git add slide-screenshots/*.png The_Price_of_Democracy_Slides_Authentic_Medici.pdf
           if ! git diff --cached --quiet; then
-            git commit -m "Export five slides to PDF with authentic Botticelli painting [skip ci]"
+            git commit -m "Assemble five verified slide screenshots into PDF [skip ci]"
             git push
           fi
