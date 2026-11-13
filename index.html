@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Price of Democracy — Renaissance Presentation</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+:root{--ink:#eadfc8;--gold:#c5a36a;--muted:#ac9a88;--wine:#3b111f;--line:#795d45}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#110c0d;color:var(--ink)}body{font-family:Inter,Arial,sans-serif;overflow:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.14;background-image:radial-gradient(#d3b98a 0.65px,transparent .65px);background-size:5px 5px;mix-blend-mode:soft-light}
+#stage{position:relative;width:100vw;height:100dvh;min-height:480px;background:radial-gradient(ellipse at 77% 42%,#4d1b27 0%,#2d101b 46%,#140b10 100%);overflow:hidden}
+#stage:after{content:"";position:absolute;inset:20px;border:1px solid #936f4957;pointer-events:none}
+.ornament{position:absolute;inset:32px;pointer-events:none;border:1px solid #7c58342b}.slide{display:none;position:absolute;inset:0;padding:7vh 9vw 12vh;align-items:center;gap:6vw}.slide.active{display:flex;animation:fade .6s ease-out both}@keyframes fade{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
+.content{position:relative;z-index:2;flex:1.15;max-width:790px}.visual{position:relative;z-index:1;flex:1;max-width:500px;min-width:270px;display:grid;place-items:center}
+.eyebrow{color:var(--gold);letter-spacing:.32em;text-transform:uppercase;font-size:clamp(10px,.88vw,14px);font-weight:600;margin:0 0:24px}
+h1,h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;letter-spacing:-.025em;line-height:.97;margin:0 0:22px}h1{font-size:clamp(58px,6.2vw,112px)}h2{font-size:clamp(50px,5.1vw,92px)}
+.lead{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(25px,2.65vw,44px);line-height:1.16;color:#f1dfc4;max-width:780px}
+.detail{font-size:clamp(14px,1.2vw,20px);line-height:1.65;color:#d2c1b0;max-width:670px}.quote{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(30px,3vw,53px);line-height:1.12;max-width:770px}
+.accent{color:#d4b077}.line{width:120px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:24px 0}
+.source{color:#b4a492;font-size:12px;letter-spacing:.04em;margin-top:20px}
+footer{position:absolute;left:9vw;right:9vw;bottom:6vh;display:flex;justify-content:space-between;align-items:center;z-index:9;color:#c2af98;font-size:11px;letter-spacing:.15em;text-transform:uppercase}
+footer button, .modal button{border:1px solid #8b6a47;background:#2d1521;color:#e1cda7;padding:10px 14px;cursor:pointer;letter-spacing:.1em}button:hover{background:#54303b}
+.nav{display:flex;gap:8px;align-items:center}.counter{min-width:56px;text-align:center}
+.sky{width:100%;height:auto;filter:drop-shadow(0 12px 32px #12070a)}.seal{width:min(35vw,350px);aspect-ratio:1;border:1px solid #b38a52a6;border-radius:50%;display:grid;place-items:center;position:relative;animation:rotate 75s linear infinite}
+.seal:before{content:"";position:absolute;inset:11%;border:1px solid #b38a5275;border-radius:50%}.seal:after{content:"";position:absolute;inset:25%;border:1px solid #b38a5259;transform:rotate(45deg)}
+.seal span{font-family:Georgia,serif;color:#caa76f;font-size:clamp(72px,11vw,170px)}@keyframes rotate{to{transform:rotate(360deg)}}
+.numbers{display:flex;gap:20px;flex-wrap:wrap;margin:24px 0}.metric{flex:1;min-width:130px;border-left:1px solid #ac865e;padding-left:18px}.metric b{display:block;font-family:Georgia,serif;color:#e0bc82;font-size:clamp(35px,4vw,65px);font-weight:400}.metric small{font-size:13px;color:#d6c6b4;line-height:1.5}
+#overlay{display:none;position:absolute;inset:0;background:#100b0eea;z-index:30;padding:7vh 10vw;overflow:auto}.modal h3{font-family:Georgia,serif;font-size:34px;color:#dbbb84}.modal p{max-width:850px;line-height:1.65;color:#e0d3c0}.modal li{padding:8px 0;line-height:1.6}.modal a{color:#e6bd7a}
+kbd{font-family:monospace;border:1px solid #795b46;border-radius:3px;padding:2px 5px;font-size:11px}
+@media(max-width:820px){.slide{padding:10vh 8vw 15vh;display:none;flex-direction:column;justify-content:center;align-items:flex-start}.slide.active{display:flex}.content{flex:initial}.visual{position:absolute;right:-7vw;bottom:12vh;width:45vw;min-width:170px;opacity:.19;pointer-events:none}.lead{font-size:28px}.detail{font-size:15px}.quote{font-size:32px}.seal{width:240px}.sky{width:300px}footer{left:8vw;right:8vw;bottom:5vh}}
+@media(prefers-reduced-motion:reduce){.slide.active{animation:none}.seal{animation:none}}
+</style></head>
+<body><main id="stage"><div class="ornament"></div>
+<section class="slide active" aria-label="Slide 1">
+ <div class="content"><p class="eyebrow">Florence · 1494 · A question of power</p><h1>The Price of<br><span class="accent">Democracy</span></h1><div class="line"></div><p class="lead">If every citizen has a voice, who truly governs when only some choose to use it?</p><p class="detail">From Renaissance Florence to the modern ballot: should voting be a civic obligation?</p></div>
+ <div class="visual"><svg class="sky" viewBox="0 0 590 490" aria-label="Stylized illustration of Renaissance Florence"><defs><linearGradient id="skycolor" x2="0" y2="1"><stop stop-color="#b58d64" stop-opacity=".22"/><stop offset="1" stop-color="#130d11"/></linearGradient></defs><path fill="url(#skycolor)" d="M0 0H590V490H0z"/><circle cx="398" cy="120" r="66" fill="#d0a66a" opacity=".4"/><path fill="#2a161d" stroke="#b28b5b" stroke-width="2" d="M0 386h55V210h20v-55h44v55h18v176h35V260h35v-42h92v42h35v126h23V248h20v-66h82v66h20v138h56v104H0z"/><path fill="#44252b" stroke="#b28b5b" stroke-width="2" d="M245 387V230c-8-80 20-123 52-150 35 30 60 70 53 150v157z"/><path fill="#775447" d="M290 77h12v-42h-12zM277 35h39v7h-39z"/><path stroke="#ba9469" fill="none" stroke-width="2" d="M246 250h104M279 95q19-18 37 0M286 318q15-28 29 0v67h-29zM60 240h60m-60 25h60m255-12h83"/><path fill="#140d12" opacity=".86" d="M0 415h590v75H0z"/></svg></div>
+</section>
+<section class="slide" aria-label="Slide 2">
+<div class="content"><p class="eyebrow">I · The moral argument</p><h2>Voting is <span class="accent">a duty.</span></h2><p class="quote">“It is strictly a matter of duty.”</p><p class="detail">John Stuart Mill argues that political rights carry obligations to the public—not merely private benefits.</p><p class="source">John Stuart Mill · Considerations on Representative Government · Chapter 10</p></div><div class="visual"><div class="seal"><span>Ⅰ</span></div></div>
+</section>
+<section class="slide" aria-label="Slide 3">
+<div class="content"><p class="eyebrow">II · The economic paradox</p><h2>When abstaining<br>seems <span class="accent">rational.</span></h2><p class="lead">One vote is unlikely to decide an election. Yet democracy depends on millions choosing to participate.</p><div class="line"></div><p class="detail">Feddersen explains the individual incentive to abstain; Oprea and colleagues recognize the unequal costs of time and lost wages.</p><p class="source">Feddersen (2004) · Oprea, Martin & Brennan (2024)</p></div><div class="visual"><div class="seal"><span>Ⅱ</span></div></div>
+</section>
+<section class="slide" aria-label="Slide 4">
+<div class="content"><p class="eyebrow">III · The strongest objection</p><h2>Can a free citizen<br>be <span class="accent">compelled?</span></h2><p class="quote">“Over himself, over his own body and mind, the individual is sovereign.”</p><p class="detail">A legitimate objection: abstention may express conscience. Blank ballots, secrecy, access and reasonable exemptions protect choice—but do not erase every concern.</p><p class="source">John Stuart Mill · On Liberty · Chapter 1</p></div><div class="visual"><div class="seal"><span>Ⅲ</span></div></div>
+</section>
+<section class="slide" aria-label="Slide 5">
+<div class="content"><p class="eyebrow">IV · Evidence changes the argument</p><h2>Turnout changes<br><span class="accent">representation.</span></h2><p class="detail">Anthony Fowler's historical research on compulsory voting in Australia found:</p><div class="numbers"><div class="metric"><b>+24 pp</b><small>voter turnout</small></div><div class="metric"><b>7–10 pp</b><small>increase in Labor vote and seat shares</small></div></div><p class="detail">Higher turnout can change election outcomes. It cannot guarantee wiser decisions, moderation, or the same effects in other countries.</p><p class="source">Anthony Fowler · Quarterly Journal of Political Science · 2013</p></div><div class="visual"><div class="seal"><span>Ⅳ</span></div></div>
+</section>
+<footer><span>THE PRICE OF DEMOCRACY <span style="opacity:.5">·</span> <a href="#" id="sources" style="color:#d0aa79;text-decoration:none">SOURCES</a> <span style="opacity:.5">·</span> <a href="#" id="notesBtn" style="color:#d0aa79;text-decoration:none">NOTES</a></span><div class="nav"><button id="prev" aria-label="Previous slide">←</button><span class="counter" id="count">01 / 05</span><button id="next" aria-label="Next slide">→</button></div></footer>
+<div id="overlay" class="modal" role="dialog" aria-modal="true"><button id="close" style="float:right">Close ✕</button><div id="modalBody"></div></div>
+</main>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let n=0;
+const notes=[
+'Begin by inviting the audience to imagine Renaissance Florence: remarkable art, but political power concentrated among a few. After the Medici expulsion in 1494, Florence expanded participation to qualified citizens. Link this to the modern question of compulsory voting.',
+'John Stuart Mill calls voting a duty. Explain that exercising political power affects other people and cannot be judged only by individual convenience. His moral argument does not by itself prove that legal enforcement is justified.',
+'Feddersen describes the paradox of not voting: the chance of one decisive ballot is tiny. Oprea and colleagues discuss the costs borne by voters. When participation costs and preferences differ across groups, turnout may become unequal.',
+'Present the strongest liberty objection honestly. Even if a citizen is allowed to cast a blank ballot, some consider abstention itself a political right. Explain the safeguards and their limits.',
+'Fowler studied the introduction of compulsory voting in Australia: an estimated 24 percentage point turnout increase and 7–10 point increase in Labor vote and seat shares. Historical estimates do not imply universal effects. Close: If democracy gives every citizen a voice, but only a fraction choose to use it, are we truly being governed by the people—or merely by those who show up?'
+];
+const refs=[
+'Feddersen, Timothy J. “Rational Choice Theory and the Paradox of Not Voting.” Journal of Economic Perspectives 18.1 (2004): 99–112. https://doi.org/10.1257/089533004773563458',
+'Fowler, Anthony. “Electoral and Policy Consequences of Voter Turnout: Evidence from Compulsory Voting in Australia.” Quarterly Journal of Political Science 8.2 (2013): 159–182. https://doi.org/10.1561/100.00012055',
+'Mill, John Stuart. Considerations on Representative Government. 1861. Chapter 10.',
+'Mill, John Stuart. On Liberty. 1859. Chapter 1.',
+'Oprea, Alexandra, Lucy Martin, and Geoffrey H. Brennan. “Moving toward the Median: Compulsory Voting and Political Polarization.” American Political Science Review 118.4 (2024): 1951–1965. https://doi.org/10.1017/S0003055423001399',
+'Pinelli, Cesare. “Machiavelli, Guicciardini and the ‘Governo Largo.’” Ratio Juris 28.2 (2015): 267–285.'
+];
+function show(i){n=(i+slides.length)%slides.length;slides.forEach((s,k)=>{s.classList.toggle('active',k===n);s.setAttribute('aria-hidden',k!==n)});document.getElementById('count').textContent=String(n+1).padStart(2,'0')+' / 05'}
+function modal(title,content){document.getElementById('modalBody').innerHTML='<h3>'+title+'</h3>'+content;document.getElementById('overlay').style.display='block'}
+document.getElementById('prev').onclick=()=>show(n-1);document.getElementById('next').onclick=()=>show(n+1);
+document.getElementById('sources').onclick=e=>{e.preventDefault();modal('Sources','<ol>'+refs.map(x=>'<li>'+x+'</li>').join('')+'</ol>')};
+document.getElementById('notesBtn').onclick=e=>{e.preventDefault();modal('Presenter notes — slide '+(n+1),'<p>'+notes[n]+'</p><p><kbd>N</kbd> Notes · <kbd>S</kbd> Sources · <kbd>←</kbd> <kbd>→</kbd> Navigate · <kbd>Esc</kbd> Close</p>')};
+document.getElementById('close').onclick=()=>document.getElementById('overlay').style.display='none';
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('overlay').style.display='none';return}if(document.getElementById('overlay').style.display==='block')return;if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();show(n+1)}if(e.key==='ArrowLeft'){show(n-1)}if(e.key.toLowerCase()==='n')document.getElementById('notesBtn').click();if(e.key.toLowerCase()==='s')document.getElementById('sources').click()});
+show(0);
+</script></body></html>
