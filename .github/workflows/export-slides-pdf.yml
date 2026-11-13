@@ -1,0 +1,68 @@
+name: Export Renaissance Slides PDF
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - index.html
+      - .github/workflows/export-slides-pdf.yml
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install browser and PDF dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install playwright pillow
+          python -m playwright install --with-deps chromium
+      - name: Export five slides with historical painting
+        run: |
+          python - <<'PY'
+          import asyncio
+          from pathlib import Path
+          from PIL import Image
+          from playwright.async_api import async_playwright
+
+          async def main():
+              async with async_playwright() as p:
+                  browser = await p.chromium.launch(headless=True, args=['--disable-dev-shm-usage'])
+                  page = await browser.new_page(viewport={'width':1600,'height':900}, device_scale_factor=1)
+                  await page.goto(Path('index.html').resolve().as_uri(),wait_until='load',timeout=90000)
+                  await page.evaluate("document.fonts.ready")
+                  await page.add_style_tag(content='*,*::before,*::after{animation-duration:0s!important;animation-delay:0s!important;transition-duration:0s!important;}')
+                  await page.wait_for_timeout(900)
+                  image = page.locator('.medici-figure img')
+                  await image.evaluate("(img) => img.decode().catch(()=>{})")
+                  ok = await image.evaluate("(img) => img.complete && img.naturalWidth > 100")
+                  if not ok:
+                      raise RuntimeError('Historical Botticelli painting did not load; refusing to export a PDF with missing artwork.')
+                  images=[]
+                  for i in range(5):
+                      await page.screenshot(path=f'/tmp/renaissance-slide-{i+1}.png', full_page=False)
+                      images.append(Image.open(f'/tmp/renaissance-slide-{i+1}.png').convert('RGB'))
+                      if i < 4:
+                          await page.keyboard.press('ArrowRight')
+                          await page.wait_for_timeout(180)
+                  images[0].save('The_Price_of_Democracy_Slides_Authentic_Medici.pdf',
+                                'PDF',resolution=150.0,save_all=True,append_images=images[1:])
+                  await browser.close()
+                  print('Verified historical painting, five pages, 16:9 landscape.')
+          asyncio.run(main())
+          PY
+      - name: Publish PDF to repository
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add The_Price_of_Democracy_Slides_Authentic_Medici.pdf
+          if ! git diff --cached --quiet; then
+            git commit -m "Export five slides to PDF with authentic Botticelli painting [skip ci]"
+            git push
+          fi
