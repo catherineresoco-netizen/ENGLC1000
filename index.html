@@ -128,6 +128,25 @@ button:focus-visible,a:focus-visible{outline:2px solid #ead0a0;outline-offset:4p
 .medici-figure figcaption span{display:block;font-size:10px;letter-spacing:.03em;color:#c7b59e;text-transform:none;font-weight:400}
 @media(max-width:980px){.medici-layout{grid-template-columns:1fr 1fr;gap:18px}.medici-title{font-size:clamp(36px,5vw,62px)}.medici-question{font-size:clamp(17px,2.3vw,24px)}.medici-figure img{height:min(45vh,400px)}}
 @media(max-width:680px){.medici-layout{grid-template-columns:1fr;gap:15px}.medici-title{font-size:36px;margin:0 0 10px}.medici-question{font-size:19px}.medici-context{font-size:13px}.medici-figure img{height:20vh;min-height:115px}.medici-stage{padding:18px 18px}.medici-copy .keyline{margin:9px 0}.medici-copy .footer-note{margin-top:8px}.medici-figure figcaption{padding:4px 4px 0}}
+
+/* Slide five: fit research reflection within the presentation frame */
+.slide[data-title="What I Learned"] .shell {padding-top:58px;padding-bottom:80px}
+.slide[data-title="What I Learned"] .stage {padding:24px 32px 28px;max-width:1160px}
+.slide[data-title="What I Learned"] .title2 {font-size:clamp(42px,4.7vw,66px);line-height:.99;margin:9px 0 5px}
+.slide[data-title="What I Learned"] .ornament {margin:6px auto;height:15px}
+.slide[data-title="What I Learned"] .arrow-bridge {margin:5px auto 4px;font-size:10px}
+.slide[data-title="What I Learned"] .reflect {gap:16px;margin-top:14px}
+.slide[data-title="What I Learned"] .reflect .card {min-height:0;padding:22px 23px}
+.slide[data-title="What I Learned"] .card h3 {font-size:clamp(25px,2.2vw,33px);line-height:1.1;margin:11px 0}
+.slide[data-title="What I Learned"] .card p,
+.slide[data-title="What I Learned"] .card li {font-size:14px;line-height:1.5}
+.slide[data-title="What I Learned"] .card li {margin-bottom:7px}
+.slide[data-title="What I Learned"] .subtitle {font-size:clamp(16px,1.5vw,21px);line-height:1.35;margin:15px auto 0;max-width:940px}
+@media(max-height:800px) and (min-width:900px) {
+ .slide[data-title="What I Learned"] .title2 {font-size:clamp(35px,4vw,57px)}
+ .slide[data-title="What I Learned"] .reflect .card {padding:16px 21px}
+ .slide[data-title="What I Learned"] .subtitle {margin-top:10px}
+}
 </style>
 </head>
 <body>
@@ -259,19 +278,20 @@ button:focus-visible,a:focus-visible{outline:2px solid #ead0a0;outline-offset:4p
           <div class="card">
             <div class="badge">What I first assumed</div>
             <h3>More voters = better democracy.</h3>
-            <p>I originally believed that increasing turnout would naturally reduce the power of outlier groups and improve democratic outcomes.</p>
+            <p>I assumed higher turnout would automatically improve democratic outcomes.</p>
           </div>
           <div class="card">
             <div class="badge">What I learned</div>
             <h3>Participation changes representation.</h3>
             <ul class="bullets">
-              <li>Feddersen showed me that abstaining can be rational from an individual perspective.</li>
-              <li>Oprea showed me that higher turnout can move politics toward the median voter under certain conditions.</li>
-              <li>Fowler found that compulsory voting increased Australian turnout by about 24 percentage points and changed electoral outcomes.</li><li>Mill's <span class="italic">On Liberty</span> showed me that civic duty must still be balanced with freedom.</li>
+              <li>Feddersen: abstaining can be individually rational.</li>
+              <li>Oprea: party platforms can shift toward the median voter.</li>
+              <li>Fowler: compulsory voting changed turnout and elections in Australia.</li>
+              <li>Mill: civic duty must still respect individual freedom.</li>
             </ul>
           </div>
         </div>
-        <p class="subtitle reveal" style="--delay:760ms">Australia: about +24 percentage points in turnout and +7–10 percentage points in Labor vote and seat shares (Fowler, 2013). These historical findings show real electoral effects, not a universal guarantee of moderation or better decisions.</p>
+        <p class="subtitle reveal" style="--delay:760ms">My takeaway: broader participation can change representation, but it cannot guarantee better decisions.</p>
       </div>
       <button class="refslink" id="showSources">View sources &amp; credits</button>
     </div>
