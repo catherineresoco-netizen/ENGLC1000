@@ -29,6 +29,7 @@ jobs:
           import asyncio
           from pathlib import Path
           from PIL import Image
+          import hashlib
           from playwright.async_api import async_playwright
 
           async def main():
@@ -45,16 +46,41 @@ jobs:
                   if not ok:
                       raise RuntimeError('Historical Botticelli painting did not load; refusing to export a PDF with missing artwork.')
                   images=[]
+                  fingerprints=[]
+                  titles=[]
                   for i in range(5):
-                      await page.screenshot(path=f'/tmp/renaissance-slide-{i+1}.png', full_page=False)
-                      images.append(Image.open(f'/tmp/renaissance-slide-{i+1}.png').convert('RGB'))
-                      if i < 4:
-                          await page.keyboard.press('ArrowRight')
-                          await page.wait_for_timeout(180)
+                      # Select the target slide directly instead of relying on the
+                      # browser's 900ms keyboard-navigation lockout.
+                      title = await page.evaluate("""(slideIndex) => {
+                          const slides = [...document.querySelectorAll('.slide')];
+                          slides.forEach((slide, idx) => {
+                              slide.classList.remove('active', 'leaving');
+                              if (idx === slideIndex) slide.classList.add('active');
+                          });
+                          const active = document.querySelectorAll('.slide.active');
+                          if (active.length !== 1 || active[0] !== slides[slideIndex]) {
+                              throw new Error('Incorrect active slide');
+                          }
+                          document.getElementById('counter').textContent =
+                              String(slideIndex + 1).padStart(2,'0') + ' / 05';
+                          return active[0].dataset.title;
+                      }""", i)
+                      await page.wait_for_timeout(200)
+                      path = f'/tmp/renaissance-slide-{i+1}.png'
+                      await page.screenshot(path=path, full_page=False)
+                      data = Path(path).read_bytes()
+                      fingerprints.append(hashlib.sha256(data).hexdigest())
+                      titles.append(title)
+                      images.append(Image.open(path).convert('RGB'))
+                  if len(images) != 5 or len(set(fingerprints)) != 5:
+                      raise RuntimeError(f'Duplicate slide pages detected: {list(zip(titles, fingerprints))}')
+                  if len(set(titles)) != 5:
+                      raise RuntimeError(f'Duplicate slide titles detected: {titles}')
+                  print('Verified five distinct captured slides:', titles)
                   images[0].save('The_Price_of_Democracy_Slides_Authentic_Medici.pdf',
                                 'PDF',resolution=150.0,save_all=True,append_images=images[1:])
                   await browser.close()
-                  print('Verified historical painting, five pages, 16:9 landscape.')
+                  print('Verified historical painting and five unique landscape pages.')
           asyncio.run(main())
           PY
       - name: Publish PDF to repository
