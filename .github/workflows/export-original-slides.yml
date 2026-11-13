@@ -1,0 +1,72 @@
+name: Export original slides to PDF
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/export-original-slides.yml'
+permissions:
+  contents: write
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save playwright@1.56.1
+      - run: npx playwright install --with-deps chromium
+      - run: python -m pip install pillow
+      - name: Capture original slide artwork and layouts
+        run: |
+          node <<'JS'
+          const { chromium } = require('playwright');
+          const path = require('path');
+          const fs = require('fs');
+          (async () => {
+            const browser = await chromium.launch({headless:true});
+            const page = await browser.newPage({viewport:{width:1517,height:1335},deviceScaleFactor:1});
+            await page.goto('file://' + path.resolve('index.html'), {waitUntil:'load'});
+            await page.evaluate(async () => { await document.fonts.ready; });
+            await page.addStyleTag({content:`
+              *,*::before,*::after{animation:none!important;transition:none!important}
+              .slide,.slide.active{transition:none!important;transform:none!important}
+              .reveal{opacity:1!important;transform:none!important}
+              .toolbar,.chrome,.progress,.notes,.overview,.refslink{display:none!important}
+            `});
+            fs.mkdirSync('slide-captures',{recursive:true});
+            const count = await page.locator('.slide').count();
+            if (count !== 5) throw new Error('Expected 5 slides; found '+count);
+            for (let i=0; i<count; i++) {
+              await page.evaluate(i => {
+                document.querySelectorAll('.slide').forEach((slide,index)=>{
+                  slide.classList.toggle('active',index===i);
+                  slide.classList.remove('leaving');
+                  slide.style.display=index===i?'block':'none';
+                  slide.style.opacity=index===i?'1':'0';
+                });
+              },i);
+              if(i===0){
+                await page.waitForFunction(() => {
+                  const img=document.querySelector('.medici-figure img');
+                  return img && img.complete && img.naturalWidth>0;
+                },null,{timeout:45000});
+              }
+              await page.screenshot({path:'slide-captures/slide-'+(i+1)+'.png',animations:'disabled'});
+            }
+            await browser.close();
+          })().catch(e=>{console.error(e);process.exit(1)});
+          JS
+      - name: Combine five screenshots into original-design PDF
+        run: |
+          python - <<'PY'
+          from PIL import Image
+          images=[Image.open(f'slide-captures/slide-{n}.png').convert('RGB') for n in range(1,6)]
+          images[0].save('Compulsory_Voting_Original_Slides.pdf',save_all=True,append_images=images[1:],resolution=110)
+          PY
+      - name: Commit PDF to GitHub Pages repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Compulsory_Voting_Original_Slides.pdf
+          git diff --cached --quiet || (git commit -m "Export original five-slide presentation as PDF" && git push)
